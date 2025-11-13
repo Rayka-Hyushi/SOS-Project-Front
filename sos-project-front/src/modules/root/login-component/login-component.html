@@ -1,0 +1,18 @@
+<form class="d-flex flex-column" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>E-mail</mat-label>
+    <input matInput type="email" autocomplete="email" formControlName="login">
+    <mat-error>E-mail é obrigatório</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="w-100 mb-2">
+    <mat-label>Senha</mat-label>
+    <input matInput type="password" autocomplete="current-password" formControlName="senha">
+    <mat-error>Senha é obrigatória</mat-error>
+  </mat-form-field>
+  <button mat-raised-button type="submit" class="w-100 mb-2">
+    <span>Entrar</span>
+  </button>
+  <mat-card-actions class="justify-content-center">
+    <small>Não tem conta: <a routerLink="/registrar">Crie uma</a></small>
+  </mat-card-actions>
+</form>
