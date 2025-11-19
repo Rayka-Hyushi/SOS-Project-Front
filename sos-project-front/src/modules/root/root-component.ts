@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {RouterOutlet} from '@angular/router';
 
@@ -15,5 +15,4 @@ import {RouterOutlet} from '@angular/router';
   styleUrl: './root-component.css',
 })
 export class RootComponent {
-
 }

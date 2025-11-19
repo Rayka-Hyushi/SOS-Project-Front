@@ -1,6 +1,6 @@
 import {
   isPlatformBrowser
-} from "./chunk-Z5EXHYJN.js";
+} from "./chunk-QZOB4VGY.js";
 import {
   APP_ID,
   ApplicationRef,
@@ -54,7 +54,7 @@ import {
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵdefineNgModule
-} from "./chunk-5WD3M42D.js";
+} from "./chunk-QVWUZSER.js";
 import {
   __spreadValues
 } from "./chunk-WDMUDEB6.js";
@@ -119,6 +119,20 @@ var Platform = class _Platform {
     }]
   }], () => [], null);
 })();
+
+// node_modules/@angular/cdk/fesm2022/element.mjs
+function coerceNumberProperty(value, fallbackValue = 0) {
+  if (_isNumberValue(value)) {
+    return Number(value);
+  }
+  return arguments.length === 2 ? fallbackValue : 0;
+}
+function _isNumberValue(value) {
+  return !isNaN(parseFloat(value)) && !isNaN(Number(value));
+}
+function coerceElement(elementOrRef) {
+  return elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
+}
 
 // node_modules/@angular/cdk/fesm2022/style-loader.mjs
 var appsWithLoaders = /* @__PURE__ */ new WeakMap();
@@ -199,20 +213,6 @@ var _VisuallyHiddenLoader = class __VisuallyHiddenLoader {
     }]
   }], null, null);
 })();
-
-// node_modules/@angular/cdk/fesm2022/element.mjs
-function coerceNumberProperty(value, fallbackValue = 0) {
-  if (_isNumberValue(value)) {
-    return Number(value);
-  }
-  return arguments.length === 2 ? fallbackValue : 0;
-}
-function _isNumberValue(value) {
-  return !isNaN(parseFloat(value)) && !isNaN(Number(value));
-}
-function coerceElement(elementOrRef) {
-  return elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
-}
 
 // node_modules/@angular/cdk/fesm2022/observers.mjs
 function shouldIgnoreRecord(record) {
@@ -3028,4 +3028,4 @@ export {
   Directionality,
   MatCommonModule
 };
-//# sourceMappingURL=chunk-ZKZXB7L4.js.map
+//# sourceMappingURL=chunk-7DJH23WF.js.map
