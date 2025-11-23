@@ -8,8 +8,8 @@ const routes: Routes = [
   {
     path: '', component: RootComponent, children: [
       {path: '', redirectTo: 'login', pathMatch: 'full'},
-      {path: 'login', component: LoginComponent},
-      {path: 'register', component: RegisterComponent}
+      {path: 'login', component: LoginComponent, data: {title: 'Bem-Vindo ao Service Order System!'}},
+      {path: 'register', component: RegisterComponent, data: {title: 'Cadastro de Usuário'}}
     ]
   }
 ];

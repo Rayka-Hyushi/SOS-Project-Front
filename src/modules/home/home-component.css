@@ -1,0 +1,31 @@
+.avatar-circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.navitem:hover {
+  background-color: white;
+  border-radius: 10px;
+}
+
+.active {
+  background-color: white;
+  border-radius: 50px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.navbar {
+  background-color: #e2c052;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 24px;
+}

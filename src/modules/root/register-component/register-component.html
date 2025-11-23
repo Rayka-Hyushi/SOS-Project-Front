@@ -1,1 +1,54 @@
-<p>register-component works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-3">
+  <div class="form-floating">
+    <input type="text" class="form-control" id="nameInput" placeholder="Name of Someone"
+           autocomplete="name" formControlName="name"
+           [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+    <label for="nameInput">Nome</label>
+    <div class="invalid-feedback" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+      <span *ngIf="form.get('name')?.errors?.['required']">É obrigatório inserir um nome de usuário.</span>
+    </div>
+  </div>
+
+  <div class="form-floating">
+    <input type="email" class="form-control" id="emailInput" placeholder="name@example.com"
+           autocomplete="email" formControlName="email"
+           [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched">
+    <label for="emailInput">E-mail</label>
+    <div class="invalid-feedback" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+      <span *ngIf="form.get('email')?.errors?.['required']">O e-mail é obrigatório.</span>
+      <span *ngIf="form.get('email')?.errors?.['email']">Por favor, insira um e-mail válido.</span>
+    </div>
+  </div>
+
+  <div class="form-floating">
+    <input type="password" class="form-control" id="passInput"
+           placeholder="Use uma senha forte com no mínimo 8 caracteres"
+           autocomplete="current-password" formControlName="pass"
+           [class.is-invalid]="form.get('pass')?.invalid && form.get('pass')?.touched">
+    <label for="passInput">Senha</label>
+    <div class="invalid-feedback" *ngIf="form.get('pass')?.invalid && form.get('pass')?.touched">
+      <span *ngIf="form.get('pass')?.errors?.['required']">É obrigatório criar uma senha.</span>
+      <span *ngIf="form.get('pass')?.errors?.['minlength']">A senha deve ter no mínimo 8 caracteres.</span>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="photoInput" class="form-label">Foto de Perfil (Máximo de 10 MB, .jpg ou .png)</label>
+    <input type="file" class="form-control" id="photoInput" formControlName="photo" (change)="onFileSelected($event)"
+           accept=".png, .jpg, .jpeg"
+           [class.is-invalid]="form.get('photo')?.invalid && form.get('photo')?.touched">
+    <div class="invalid-feedback" *ngIf="form.get('photo')?.invalid && form.get('photo')?.touched">
+      <span *ngIf="form.get('photo')?.errors?.['maxFileSize']">O arquivo não pode exceder 10 MB.</span>
+      <span *ngIf="form.get('photo')?.errors?.['invalidFileType']">O arquivo deve ser uma imagem JPG ou PNG.</span>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <button routerLink="/login" class="btn btn-dark text-white btn-lg w-50 me-2">
+      <span>Voltar</span>
+    </button>
+    <button type="submit" class="btn btn-success btn-lg w-50 ms-2" [disabled]="form.invalid">
+      Cadastrar
+    </button>
+  </div>
+</form>

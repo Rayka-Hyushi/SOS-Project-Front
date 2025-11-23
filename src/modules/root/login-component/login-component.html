@@ -1,18 +1,31 @@
-<form class="d-flex flex-column" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline" class="w-100 mb-3">
-    <mat-label>E-mail</mat-label>
-    <input matInput type="email" autocomplete="email" formControlName="login">
-    <mat-error>E-mail é obrigatório</mat-error>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="w-100 mb-2">
-    <mat-label>Senha</mat-label>
-    <input matInput type="password" autocomplete="current-password" formControlName="senha">
-    <mat-error>Senha é obrigatória</mat-error>
-  </mat-form-field>
-  <button mat-raised-button type="submit" class="w-100 mb-2">
-    <span>Entrar</span>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-3">
+  <div class="form-floating">
+    <input type="email" class="form-control" id="emailInput" placeholder="name@example.com"
+           autocomplete="email" formControlName="login"
+           [class.is-invalid]="form.get('login')?.invalid && form.get('login')?.touched">
+    <label for="emailInput">E-mail</label>
+    <div class="invalid-feedback" *ngIf="form.get('login')?.invalid && form.get('login')?.touched">
+      <span *ngIf="form.get('login')?.errors?.['required']">O e-mail é obrigatório.</span>
+      <span *ngIf="form.get('login')?.errors?.['email']">Por favor, insira um e-mail válido.</span>
+    </div>
+  </div>
+
+  <div class="form-floating">
+    <input type="password" class="form-control" id="senhaInput" placeholder="Senha"
+           autocomplete="current-password" formControlName="senha"
+           [class.is-invalid]="form.get('senha')?.invalid && form.get('senha')?.touched">
+    <label for="senhaInput">Senha</label>
+
+    <div class="invalid-feedback" *ngIf="form.get('senha')?.invalid && form.get('senha')?.touched">
+      O campo Senha é obrigatório.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-success btn-lg" [disabled]="form.invalid">
+    Entrar
   </button>
-  <mat-card-actions class="justify-content-center">
-    <small>Não tem conta: <a routerLink="/register">Crie uma</a></small>
-  </mat-card-actions>
+
+  <div class="text-center mt-2">
+    <small>Não tem conta? <a routerLink="/register">Crie uma</a></small>
+  </div>
 </form>

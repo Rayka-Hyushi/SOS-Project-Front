@@ -1,0 +1,19 @@
+.btn-success:disabled {
+  background-color: #e9ecef;
+  color: #6c757d !important;
+  border-color: #e9ecef !important;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.btn-success {
+  background-color: #e2c052;
+  color: #000 !important;
+  border-color: #e9ecef !important;
+}
+
+.btn-success:hover {
+  background-color: #d4a72c;
+  color: #000 !important;
+  border-color: #d4a72c !important;
+}

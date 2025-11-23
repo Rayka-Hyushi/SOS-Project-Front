@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Usuario} from '../models/usuario';
+import {UsuarioPerfilDTO} from '../models/UsuarioPerfilDTO';
 import {ActivatedRoute, Router} from '@angular/router';
 import {env} from '../../environment/environment';
+import {Observable} from 'rxjs';
+import {LoginResponse} from '../models/LoginResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +16,8 @@ export class AuthService {
   constructor(private httpClient: HttpClient, private router: Router, private route: ActivatedRoute) {
   }
 
-  login(login: string, senha: string) {
-    return this.httpClient.post<any>(env.apiUrl + "/login", {login, senha});
+  login(login: string, senha: string): Observable<LoginResponse> {
+    return this.httpClient.post<LoginResponse>(env.apiUrl + "/login", {login, senha});
   }
 
   logout(): void {
@@ -32,6 +34,10 @@ export class AuthService {
     }
   }
 
+  setUserProfile(profile: UsuarioPerfilDTO) {
+    localStorage.setItem(this.USER_KEY, JSON.stringify(profile));
+  }
+
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
   }
@@ -40,27 +46,26 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  getUser(): Usuario | null {
-    const raw = localStorage.getItem(this.USER_KEY);
-    if (!raw) return null;
-    try {
-      return JSON.parse(raw) as Usuario;
-    } catch {
-      return null;
+  getUser(): UsuarioPerfilDTO | null {
+    const userJson = localStorage.getItem(this.USER_KEY);
+    if (userJson) {
+      return JSON.parse(userJson) as UsuarioPerfilDTO;
     }
+    return null;
   }
 
-  private userFromToken(token: string): Usuario | null {
+  private userFromToken(token: string): UsuarioPerfilDTO | null {
     try {
       const payload = token.split('.')[1];
       if (!payload) return null;
       const decoded = JSON.parse(atob(payload));
       console.log('Decoded JWT payload:', decoded);
       return {
-        id: decoded.sub ?? undefined,
+        uuid: decoded.sub ?? undefined,
+        name: decoded.name ?? undefined,
         email: decoded.sub ?? undefined,
-        role: decoded.ROLE ?? undefined
-      } as Usuario;
+        photo: decoded.photo ?? undefined,
+      } as UsuarioPerfilDTO;
     } catch (e) {
       return null;
     }
