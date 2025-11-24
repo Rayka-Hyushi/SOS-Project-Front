@@ -5,3 +5,9 @@ export interface UsuarioPerfilDTO {
   photo?: string;
   photoType?: string;
 }
+
+export interface UsuarioRequestDTO {
+  name: string;
+  email: string;
+  pass: string;
+}

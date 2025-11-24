@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {UsuarioPerfilDTO} from '../models/UsuarioPerfilDTO';
+import {UsuarioPerfilDTO} from '../models/usuario';
 import {ActivatedRoute, Router} from '@angular/router';
 import {env} from '../../environment/environment';
 import {Observable} from 'rxjs';
-import {LoginResponse} from '../models/LoginResponse';
+import {LoginResponse} from '../models/login';
 
 @Injectable({
   providedIn: 'root',

@@ -1,40 +1,63 @@
-<nav class="navbar navbar-expand-lg">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="dashboard">Service Order System</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+<mat-toolbar class="container-fluid mat-elevation-z2 w-100">
+  <div class="d-flex align-items-center justify-content-between w-100">
+    <button mat-icon-button class="d-lg-none me-2" aria-label="Alternar navegação"
+            (click)="isNavCollapsed = !isNavCollapsed">
+      <mat-icon>{{ isNavCollapsed ? 'menu' : 'close' }}</mat-icon>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 col-10">
-        <li class="navitem">
-          <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="dashboard"><i class="fa-solid fa-house fa-lg me-2"></i>Início</a>
-        </li>
-        <li class="navitem">
-          <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="clients"><i class="fa-solid fa-address-book fa-lg me-2"></i>Clientes</a>
-        </li>
-        <li class="navitem">
-          <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="services"><i class="fa-solid fa-screwdriver-wrench fa-lg me-2"></i>Serviços</a>
-        </li>
-        <li class="navitem">
-          <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="orders"><i class="fa-solid fa-folder-open fa-lg me-2"></i>Ordens</a>
-        </li>
-      </ul>
 
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <img [src]="loadUserMiniPhoto()" alt="Foto de Perfil" class="avatar-circle">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle username" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{authService.getUser()?.name}}
-          </a>
-          <ul class="dropdown-menu align-items-center dropdown-menu-end">
-            <li><a class="dropdown-item justify-content-between" routerLink="profile"><i class="fa-solid fa-id-badge fa-xl me-2"></i>Meu perfil</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" (click)="logout()"><i class="fa-solid fa-arrow-right-from-bracket fa-lg me-2"></i>Sair</a></li>
-          </ul>
-        </li>
-      </ul>
+    <span class="toolbar-title flex-grow-1 flex-lg-grow-0" routerLink="dashboard">
+      Service Order System
+    </span>
+
+    <span class="toolbar-links d-none d-lg-flex align-items-center justify-content-center">
+      <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+    </span>
+
+    <div class="d-flex align-items-center">
+      <img [src]="loadUserMiniPhoto()" alt="Foto de Perfil" class="avatar-circle me-2"/>
+      <button mat-button [matMenuTriggerFor]="userMenu" class="username-button">
+        <span class="username">{{ authService.getUser()?.name }}</span>
+        <mat-icon class="arrowdropdown">arrow_drop_down</mat-icon>
+      </button>
     </div>
   </div>
-</nav>
-<router-outlet></router-outlet>
+
+  <div class="toolbar-links-mobile d-lg-none" *ngIf="!isNavCollapsed">
+    <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+  </div>
+
+  <mat-menu #userMenu="matMenu" xPosition="before" panelClass="user-menu-panel">
+    <button mat-menu-item routerLink="profile">
+      <mat-icon>badge</mat-icon>
+      Meu perfil
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Sair
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<ng-template #navLinks>
+  <a mat-button routerLink="dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon class="me-2">home</mat-icon>
+    Início
+  </a>
+  <a mat-button routerLink="clients" routerLinkActive="active-link">
+    <mat-icon class="me-2">contacts</mat-icon>
+    Clientes
+  </a>
+  <a mat-button routerLink="services" routerLinkActive="active-link">
+    <mat-icon class="me-2">build</mat-icon>
+    Serviços
+  </a>
+  <a mat-button routerLink="orders" routerLinkActive="active-link">
+    <mat-icon class="me-2">folder_open</mat-icon>
+    Ordens
+  </a>
+</ng-template>
+
+<div class="container-fluid m-auto w-100">
+  <router-outlet></router-outlet>
+</div>

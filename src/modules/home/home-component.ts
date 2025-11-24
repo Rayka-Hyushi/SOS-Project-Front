@@ -3,9 +3,11 @@ import {AuthService} from '../../core/services/auth-service';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {MatButton} from '@angular/material/button';
-import {UsuarioPerfilDTO} from '../../core/models/UsuarioPerfilDTO';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {UsuarioPerfilDTO} from '../../core/models/usuario';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatDivider} from '@angular/material/divider';
+import {NgClass, NgIf, NgTemplateOutlet} from '@angular/common';
 
 @Component({
   selector: 'app-home-component',
@@ -18,12 +20,19 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
     MatMenuTrigger,
     MatMenu,
     MatMenuItem,
-    RouterLinkActive
+    RouterLinkActive,
+    MatDivider,
+    NgClass,
+    NgTemplateOutlet,
+    MatIconButton,
+    NgIf
   ],
   templateUrl: './home-component.html',
   styleUrl: './home-component.css',
 })
 export class HomeComponent {
+  isNavCollapsed = true;
+
   constructor(
     protected authService: AuthService
   ) {
@@ -35,14 +44,6 @@ export class HomeComponent {
       return `data:${user.photoType};base64,${user.photo}`;
     }
     return undefined;
-  }
-
-  loadUserMiniName() {
-    const user = this.authService.getUser() as UsuarioPerfilDTO | null;
-    if (user && user.name) {
-      return user.name;
-    }
-    return 'Erro ao carregar nome de usuário';
   }
 
   protected logout() {

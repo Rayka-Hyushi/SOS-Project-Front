@@ -1,15 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {ActivatedRoute, NavigationEnd, Router, RouterOutlet} from '@angular/router';
-import {filter, map, switchMap} from 'rxjs';
+import {filter, map} from 'rxjs';
 
 @Component({
   selector: 'app-root-component',
   imports: [
-    MatCard,
-    MatCardHeader,
-    MatCardContent,
-    MatCardTitle,
     RouterOutlet
   ],
   templateUrl: './root-component.html',

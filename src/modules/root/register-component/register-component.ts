@@ -9,7 +9,7 @@ import {
   Validators
 } from '@angular/forms';
 import {UserService} from '../../../core/services/user-service';
-import {UsuarioRequestDTO} from '../../../core/models/UsuarioRequestDTO';
+import {UsuarioRequestDTO} from '../../../core/models/usuario';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router, RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
