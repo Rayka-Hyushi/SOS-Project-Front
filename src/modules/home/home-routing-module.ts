@@ -5,6 +5,7 @@ import {homeGuard} from '../../core/security/home-guard';
 import {DashboardComponent} from './dashboard-component/dashboard-component';
 import {ClientComponent} from './client-component/client-component';
 import {ServiceComponent} from './service-component/service-component';
+import {OrdersComponent} from './orders-component/orders-component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'clients', component: ClientComponent},
-      {path: 'services', component: ServiceComponent}
+      {path: 'services', component: ServiceComponent},
+      {path: 'orders', component: OrdersComponent}
     ]
   }
 ]

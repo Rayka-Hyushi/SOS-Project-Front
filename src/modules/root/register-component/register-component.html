@@ -38,6 +38,7 @@
            accept=".png, .jpg, .jpeg"
            [class.is-invalid]="form.get('photo')?.invalid && form.get('photo')?.touched">
     <div class="invalid-feedback" *ngIf="form.get('photo')?.invalid && form.get('photo')?.touched">
+      <span *ngIf="form.get('photo')?.errors?.['required']">É obrigatório selecionar uma foto de perfil.</span>
       <span *ngIf="form.get('photo')?.errors?.['maxFileSize']">O arquivo não pode exceder 10 MB.</span>
       <span *ngIf="form.get('photo')?.errors?.['invalidFileType']">O arquivo deve ser uma imagem JPG ou PNG.</span>
     </div>

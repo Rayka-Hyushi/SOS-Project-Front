@@ -52,7 +52,7 @@ export class RegisterComponent {
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       pass: ['', [Validators.required, Validators.minLength(8)]],
-      photo: ['', [maxFileSizeValidator()]]
+      photo: ['', [Validators.required, maxFileSizeValidator()]]
     })
   }
 
