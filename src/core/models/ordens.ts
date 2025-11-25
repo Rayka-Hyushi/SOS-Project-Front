@@ -1,4 +1,5 @@
 export interface Order {
+  id: number;
   uuid: string;
   clientUUID: string;
   device: string;

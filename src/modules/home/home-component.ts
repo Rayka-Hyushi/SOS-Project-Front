@@ -22,7 +22,6 @@ import {NgClass, NgIf, NgTemplateOutlet} from '@angular/common';
     MatMenuItem,
     RouterLinkActive,
     MatDivider,
-    NgClass,
     NgTemplateOutlet,
     MatIconButton,
     NgIf

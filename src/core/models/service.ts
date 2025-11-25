@@ -1,5 +1,5 @@
 export interface Service {
-  uuid: number;
+  uuid: string;
   service: string;
   description: string;
   value: number;
