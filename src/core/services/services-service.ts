@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Service} from '../models/service';
+import {Service, ServiceRequestDTO} from '../models/service';
 import {Observable} from 'rxjs';
 import {env} from '../../environment/environment';
 import {Page} from '../models/page';
@@ -12,7 +12,7 @@ import {Cliente} from '../models/cliente';
 export class ServicesService {
   constructor(private httpClient: HttpClient) {}
 
-  createService(service: Service): Observable<Service> {
+  createService(service: ServiceRequestDTO): Observable<Service> {
     return this.httpClient.post<Service>(env.apiUrl + "/servicos", service);
   }
 
@@ -26,11 +26,7 @@ export class ServicesService {
     return this.httpClient.get<Page<Service>>(env.apiUrl + "/servicos", {params});
   }
 
-  getOneService(uuid: string): Observable<Service> {
-    return this.httpClient.get<Service>(env.apiUrl + "/servicos/" + uuid);
-  }
-
-  updateService(uuid: string, service: Service): Observable<Service> {
+  updateService(uuid: string, service: ServiceRequestDTO): Observable<Service> {
     return this.httpClient.put<Service>(env.apiUrl + "/servicos/" + uuid, service);
   }
 

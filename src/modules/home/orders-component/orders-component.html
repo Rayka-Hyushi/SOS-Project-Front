@@ -62,17 +62,34 @@
     <mat-card-content>
       <div class="table-wrapper">
         <table mat-table [dataSource]="dataSource" matSort class="full-width-table">
-
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let order">{{ order.id }}</td>
-          </ng-container>
-
           <!-- Coluna Cliente -->
           <ng-container matColumnDef="clientName">
             <th mat-header-cell *matHeaderCellDef>Cliente</th>
             <!-- Ajuste a propriedade 'clientName' conforme o seu DTO de resposta real -->
-            <td mat-cell *matCellDef="let order">{{ order.cliente?.name || 'Cliente N/A' }}</td>
+            <td mat-cell *matCellDef="let order">{{ order.cliente.name || 'Cliente N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="device">
+            <th mat-header-cell *matHeaderCellDef>Dispositivo</th>
+            <td mat-cell *matCellDef="let order">{{ order.device }}</td>
+          </ng-container>
+
+          <!-- Coluna Data Abertura -->
+          <ng-container matColumnDef="openDate">
+            <th mat-header-cell *matHeaderCellDef>Data Abertura</th>
+            <td mat-cell *matCellDef="let order">{{ order.openDate | date:'dd/MM/yyyy HH:mm' }}</td>
+          </ng-container>
+
+          <!-- Coluna Data Fechamento -->
+          <ng-container matColumnDef="closeDate">
+            <th mat-header-cell *matHeaderCellDef>Data Fechamento</th>
+            <td mat-cell *matCellDef="let order">{{ order.closeDate | date:'dd/MM/yyyy HH:mm' }}</td>
+          </ng-container>
+
+          <!-- Coluna Valor Total -->
+          <ng-container matColumnDef="totalValue">
+            <th mat-header-cell *matHeaderCellDef>Total</th>
+            <td mat-cell *matCellDef="let order">{{ order.total | currency:'BRL' }}</td>
           </ng-container>
 
           <!-- Coluna Status -->
@@ -84,18 +101,6 @@
                 {{ order.status }}
               </span>
             </td>
-          </ng-container>
-
-          <!-- Coluna Data -->
-          <ng-container matColumnDef="createdAt">
-            <th mat-header-cell *matHeaderCellDef>Data Abertura</th>
-            <td mat-cell *matCellDef="let order">{{ order.opendate | date:'dd/MM/yyyy HH:mm' }}</td>
-          </ng-container>
-
-          <!-- Coluna Valor Total -->
-          <ng-container matColumnDef="totalValue">
-            <th mat-header-cell *matHeaderCellDef>Total</th>
-            <td mat-cell *matCellDef="let order">{{ order.total | currency:'BRL' }}</td>
           </ng-container>
 
           <!-- Ações -->
@@ -215,7 +220,7 @@
         <div class="col-md-4">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Extras (R$)</mat-label>
-            <input matInput type="number" formControlName="extra" min="0" required>
+            <input matInput type="number" formControlName="extras" min="0" required>
           </mat-form-field>
         </div>
 

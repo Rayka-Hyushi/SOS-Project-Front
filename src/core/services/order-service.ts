@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Order} from '../models/ordens';
+import {Order, OrderRequestDTO} from '../models/ordens';
 import {Observable} from 'rxjs';
 import {env} from '../../environment/environment';
 import {Page} from '../models/page';
@@ -12,7 +12,7 @@ export class OrderService {
   constructor(private httpClient: HttpClient) {
   }
 
-  createOrder(order: Order): Observable<Order> {
+  createOrder(order: OrderRequestDTO): Observable<Order> {
     return this.httpClient.post<Order>(env.apiUrl + "/ordens", order);
   }
 

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Cliente} from '../../../core/models/cliente';
+import {Cliente, ClienteRequestDTO} from '../../../core/models/cliente';
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -19,43 +19,45 @@ import {MatIcon} from '@angular/material/icon';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatInput} from '@angular/material/input';
 import {ClientService} from '../../../core/services/client-service';
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-client-component',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatIcon,
-    MatCard,
-    MatFormField,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    MatCardActions,
-    MatPaginator,
-    MatDialogContent,
-    MatDialogActions,
-    MatTable,
-    FormsModule,
-    MatLabel,
-    MatButton,
-    MatInput,
-    MatIconButton,
-    MatSort,
-    MatColumnDef,
-    MatHeaderCell,
-    MatCell,
-    MatHeaderCellDef,
-    MatCellDef,
-    MatHeaderRow,
-    MatRow,
-    MatHeaderRowDef,
-    MatRowDef,
-    MatNoDataRow,
-    MatDialogTitle,
-    MatDialogClose
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatIcon,
+        MatCard,
+        MatFormField,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardContent,
+        MatCardActions,
+        MatPaginator,
+        MatDialogContent,
+        MatDialogActions,
+        MatTable,
+        FormsModule,
+        MatLabel,
+        MatButton,
+        MatInput,
+        MatIconButton,
+        MatSort,
+        MatColumnDef,
+        MatHeaderCell,
+        MatCell,
+        MatHeaderCellDef,
+        MatCellDef,
+        MatHeaderRow,
+        MatRow,
+        MatHeaderRowDef,
+        MatRowDef,
+        MatNoDataRow,
+        MatDialogTitle,
+        MatDialogClose,
+        MatProgressSpinner
+    ],
   templateUrl: './client-component.html',
   styleUrl: './client-component.css',
 })
@@ -130,7 +132,7 @@ export class ClientComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const formValue = this.clientForm.getRawValue() as Cliente;
+    const formValue = this.clientForm.getRawValue() as ClienteRequestDTO;
 
     const request$ = formValue.uuid
       ? this.clientService.updateClient(String(formValue.uuid), formValue)

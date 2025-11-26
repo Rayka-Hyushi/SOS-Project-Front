@@ -1,8 +1,11 @@
+import {Cliente} from './cliente';
+
 export interface Order {
-  id: number;
   uuid: string;
-  clientUUID: string;
+  client: Cliente;
   device: string;
+  openDate: string;
+  closeDate?: string;
   description: string;
   serviceUUIDs: string[];
   status: string;
@@ -12,6 +15,7 @@ export interface Order {
 }
 
 export interface OrderRequestDTO {
+  uuid?: string;
   clientUUID: string;
   device: string;
   description: string;

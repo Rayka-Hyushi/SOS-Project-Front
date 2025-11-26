@@ -18,45 +18,47 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Service} from '../../../core/models/service';
+import {Service, ServiceRequestDTO} from '../../../core/models/service';
 import {ServicesService} from '../../../core/services/services-service';
 import {PageEvent} from '@angular/material/paginator';
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-service-component',
-  imports: [
-    MatButton,
-    MatCard,
-    MatCardActions,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
-    MatCell,
-    MatCellDef,
-    MatColumnDef,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogContent,
-    MatDialogTitle,
-    MatFormField,
-    MatHeaderCell,
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatIcon,
-    MatIconButton,
-    MatInput,
-    MatLabel,
-    MatPaginator,
-    MatRow,
-    MatRowDef,
-    MatSort,
-    MatTable,
-    NgIf,
-    ReactiveFormsModule,
-    FormsModule,
-    MatHeaderCellDef,
-    MatNoDataRow
-  ],
+    imports: [
+        MatButton,
+        MatCard,
+        MatCardActions,
+        MatCardContent,
+        MatCardHeader,
+        MatCardTitle,
+        MatCell,
+        MatCellDef,
+        MatColumnDef,
+        MatDialogActions,
+        MatDialogClose,
+        MatDialogContent,
+        MatDialogTitle,
+        MatFormField,
+        MatHeaderCell,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatIcon,
+        MatIconButton,
+        MatInput,
+        MatLabel,
+        MatPaginator,
+        MatRow,
+        MatRowDef,
+        MatSort,
+        MatTable,
+        NgIf,
+        ReactiveFormsModule,
+        FormsModule,
+        MatHeaderCellDef,
+        MatNoDataRow,
+        MatProgressSpinner
+    ],
   templateUrl: './service-component.html',
   styleUrl: './service-component.css',
 })
@@ -127,11 +129,12 @@ export class ServiceComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const formValue = this.serviceForm.getRawValue() as Service;
+    const formValue = this.serviceForm.getRawValue() as ServiceRequestDTO;
 
     const request$ = formValue.uuid
       ? this.serviceService.updateService(String(formValue.uuid), formValue)
       : this.serviceService.createService(formValue);
+
     request$.subscribe({
       next: () => {
         this.dialog.closeAll();

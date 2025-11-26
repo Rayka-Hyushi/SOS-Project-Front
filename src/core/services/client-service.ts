@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Cliente} from '../models/cliente';
+import {Cliente, ClienteRequestDTO} from '../models/cliente';
 import {env} from '../../environment/environment';
 import {Observable} from 'rxjs';
 import {Page} from '../models/page';
@@ -12,7 +12,7 @@ export class ClientService {
   constructor(private httpClient: HttpClient) {
   }
 
-  createClient(cliente: Cliente): Observable<Cliente> {
+  createClient(cliente: ClienteRequestDTO): Observable<Cliente> {
     return this.httpClient.post<Cliente>(env.apiUrl + "/clientes", cliente);
   }
 
@@ -26,11 +26,7 @@ export class ClientService {
     return this.httpClient.get<Page<Cliente>>(env.apiUrl + "/clientes", {params});
   }
 
-  getOneClient(uuid: string): Observable<Cliente> {
-    return this.httpClient.get<Cliente>(env.apiUrl + "/clientes/" + uuid);
-  }
-
-  updateClient(uuid: string, cliente: Cliente): Observable<Cliente> {
+  updateClient(uuid: string, cliente: ClienteRequestDTO): Observable<Cliente> {
     return this.httpClient.put<Cliente>(env.apiUrl + "/clientes/" + uuid, cliente);
   }
 

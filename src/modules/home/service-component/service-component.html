@@ -82,6 +82,11 @@
           </tr>
         </table>
       </div>
+
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="loading-shade">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
     </mat-card-content>
 
     <mat-card-actions align="end">

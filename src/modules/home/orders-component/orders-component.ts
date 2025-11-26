@@ -85,7 +85,7 @@ import {ClientService} from '../../../core/services/client-service';
   styleUrl: './orders-component.css',
 })
 export class OrdersComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'clientName', 'createdAt', 'totalValue', 'status', 'actions'];
+  displayedColumns: string[] = ['clientName', 'device', 'openDate', 'closeDate', 'totalValue', 'status', 'actions'];
   dataSource = new MatTableDataSource<Order>();
   orderForm: FormGroup;
 
@@ -130,7 +130,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       description: ['', Validators.required],
       serviceUUIDs: [[], Validators.required],
       status: ['', Validators.required],
-      extra: ['', Validators.required],
+      extras: ['', Validators.required],
       discount: ['', Validators.required]
     });
     this.setupTotalCalculation();
@@ -172,7 +172,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
 
   calculateTotal(formValues: any): void {
     const selectedServiceUUIDs: string[] = formValues.serviceUUIDs || [];
-    const extra = Number(formValues.extra) || 0;
+    const extras = Number(formValues.extras) || 0;
     const discount = Number(formValues.discount) || 0;
     let servicesTotal = 0;
 
@@ -184,7 +184,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
         }
       });
     }
-    this.calculatedTotal = servicesTotal + extra - discount;
+    this.calculatedTotal = servicesTotal + extras - discount;
     if (this.calculatedTotal < 0) this.calculatedTotal = 0;
   }
 
@@ -223,7 +223,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   openOrderDialog(template: TemplateRef<unknown>, order?: Order): void {
     this.orderForm.reset({
       status: 'ABERTA',
-      extra: 0,
+      extras: 0,
       discount: 0,
       serviceUUIDs: []
     });
@@ -238,7 +238,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       this.orderForm.patchValue({
         ...order,
         serviceUUIDs: serviceUUIDs,
-        extra: order.extras ?? 0,
+        extras: order.extras ?? 0,
         discount: order.discount ?? 0
       });
       this.calculateTotal(this.orderForm.value);
@@ -253,11 +253,18 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const formValue = this.orderForm.getRawValue() as Order;
+    const formValue = this.orderForm.getRawValue();
+    const payload = {
+      ...formValue,
+      extras: Number(formValue.extras ?? 0),
+      discount: Number(formValue.discount ?? 0),
+      servicosUuids: formValue.serviceUUIDs ?? []
+    };
+    delete (payload as any).serviceUUIDs;
 
-    const request$ = formValue.uuid
-      ? this.orderService.updateOrder(String(formValue.uuid), formValue)
-      : this.orderService.createOrder(formValue);
+    const request$ = payload.uuid
+      ? this.orderService.updateOrder(String(payload.uuid), payload)
+      : this.orderService.createOrder(payload);
 
     request$.subscribe({
       next: () => {
