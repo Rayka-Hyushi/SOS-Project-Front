@@ -26,6 +26,10 @@ export class ClientService {
     return this.httpClient.get<Page<Cliente>>(env.apiUrl + "/clientes", {params});
   }
 
+  getClientByUUID(uuid: string): Observable<Cliente> {
+    return this.httpClient.get<Cliente>(env.apiUrl + "/clientes/" + uuid);
+  }
+
   updateClient(uuid: string, cliente: ClienteRequestDTO): Observable<Cliente> {
     return this.httpClient.put<Cliente>(env.apiUrl + "/clientes/" + uuid, cliente);
   }

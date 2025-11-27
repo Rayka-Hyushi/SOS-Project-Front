@@ -1,8 +1,6 @@
-import {Cliente} from './cliente';
-
 export interface Order {
   uuid: string;
-  client: Cliente;
+  clientUUID: string;
   device: string;
   openDate: string;
   closeDate?: string;
