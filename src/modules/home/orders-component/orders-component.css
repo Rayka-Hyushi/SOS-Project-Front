@@ -1,0 +1,13 @@
+/* orders-component.scss (ou styles.css) */
+
+/* Define a largura mínima para o Select de Status */
+.filter-status-os .mat-form-field {
+  min-width: 130px;
+  max-width: 150px;
+}
+
+/* Define a largura mínima para o Select de Tipo de Data */
+.filter-date-type .mat-form-field {
+  min-width: 100px;
+  max-width: 120px;
+}

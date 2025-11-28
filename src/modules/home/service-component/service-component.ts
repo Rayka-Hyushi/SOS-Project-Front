@@ -11,7 +11,7 @@ import {
   MatRow, MatRowDef, MatTable, MatTableDataSource
 } from "@angular/material/table";
 import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
-import {MatFormField} from "@angular/material/form-field";
+import {MatFormField, MatSuffix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput, MatLabel} from "@angular/material/input";
 import {MatPaginator} from "@angular/material/paginator";
@@ -25,40 +25,41 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-service-component',
-    imports: [
-        MatButton,
-        MatCard,
-        MatCardActions,
-        MatCardContent,
-        MatCardHeader,
-        MatCardTitle,
-        MatCell,
-        MatCellDef,
-        MatColumnDef,
-        MatDialogActions,
-        MatDialogClose,
-        MatDialogContent,
-        MatDialogTitle,
-        MatFormField,
-        MatHeaderCell,
-        MatHeaderRow,
-        MatHeaderRowDef,
-        MatIcon,
-        MatIconButton,
-        MatInput,
-        MatLabel,
-        MatPaginator,
-        MatRow,
-        MatRowDef,
-        MatSort,
-        MatTable,
-        NgIf,
-        ReactiveFormsModule,
-        FormsModule,
-        MatHeaderCellDef,
-        MatNoDataRow,
-        MatProgressSpinner
-    ],
+  imports: [
+    MatButton,
+    MatCard,
+    MatCardActions,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogTitle,
+    MatFormField,
+    MatHeaderCell,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatIcon,
+    MatIconButton,
+    MatInput,
+    MatLabel,
+    MatPaginator,
+    MatRow,
+    MatRowDef,
+    MatSort,
+    MatTable,
+    MatSuffix,
+    NgIf,
+    ReactiveFormsModule,
+    FormsModule,
+    MatHeaderCellDef,
+    MatNoDataRow,
+    MatProgressSpinner
+  ],
   templateUrl: './service-component.html',
   styleUrl: './service-component.css',
 })

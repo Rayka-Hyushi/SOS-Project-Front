@@ -21,7 +21,7 @@ import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialog
 import {OrderService} from '../../../core/services/order-service';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatCard, MatCardActions, MatCardContent} from '@angular/material/card';
-import {MatError, MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
+import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
 import {MatInput} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
@@ -84,7 +84,8 @@ import {ClientService} from '../../../core/services/client-service';
     MatDialogContent,
     ReactiveFormsModule,
     MatDialogActions,
-    MatDialogClose
+    MatDialogClose,
+    MatSuffix
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './orders-component.html',
@@ -194,7 +195,6 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       return `${year}-${month}-${day}`;
     };
 
-    // Usamos a função auxiliar aqui
     const dataInicioStr = formatDate(this.filters.dataInicio);
     const dataFimStr = formatDate(this.filters.dataFim);
 
@@ -442,6 +442,56 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.filters.dataInicio = null;
     this.filters.dataFim = null;
     this.applySearch();
+  }
+
+  private clearDateFilters(): void {
+    this.filters.dataInicio = null;
+    this.filters.dataFim = null;
+  }
+
+  handleClientFilterChange(text: string): void {
+    // Se o usuário está digitando algo (o valor não está vazio)
+    if (text) {
+      // 1. Limpa Status e Data
+      this.filters.statusFiltro = '';
+      this.clearDateFilters();
+
+      // NOTA: Não chamamos applySearch() aqui. O usuário deve
+      // pressionar ENTER ou o botão de busca principal para evitar a
+      // execução de consultas em cada tecla digitada.
+
+    } else {
+      // Se o campo de cliente for limpo (text é vazio), disparamos a busca
+      // para carregar a lista completa
+      this.filters.clienteFiltro = '';
+      this.applySearch();
+    }
+  }
+
+  applyStatusFilter(status: string): void {
+    if (status) {
+      // 1. Limpa Cliente (o input de texto) e Data
+      this.filters.clienteFiltro = ''; // <--- LIMPA O INPUT DE TEXTO
+      this.clearDateFilters();
+      this.applySearch();
+    } else {
+      // Se o status for desmarcado (Todos), limpa e busca tudo
+      this.filters.clienteFiltro = '';
+      this.clearDateFilters();
+      this.applySearch();
+    }
+  }
+
+  applyDateFilter(): void {
+    // A busca só deve ocorrer se as duas datas (Início e Fim) estiverem preenchidas
+    if (this.filters.dataInicio && this.filters.dataFim) {
+      // 1. Limpa Cliente (o input de texto) e Status
+      this.filters.clienteFiltro = ''; // <--- LIMPA O INPUT DE TEXTO
+      this.filters.statusFiltro = '';
+      // 2. Aplica a busca
+      this.applySearch();
+    }
+    // Se uma data for apagada, não faz nada até que o usuário clique em Limpar.
   }
 
   changePage(event: PageEvent): void {

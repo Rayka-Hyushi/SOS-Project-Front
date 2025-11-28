@@ -3,55 +3,70 @@
     <h2 class="page-title">Gerenciamento de Ordens de Serviço</h2>
     <button mat-flat-button color="primary" (click)="openOrderDialog(orderDialog)">
       <mat-icon>add_task</mat-icon>
-      Nova Ordem de Serviço
+      Nova Ordem
     </button>
   </div>
 
   <!-- CARD DE FILTROS -->
   <mat-card class="search-card mat-elevation-z2 mb-3 p-3">
-    <div class="row align-items-center">
+    <div class="row align-items-center g-3">
       <!-- Filtro por Nome do Cliente -->
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Cliente</mat-label>
-          <input matInput placeholder="Nome do cliente" [(ngModel)]="filters.clienteFiltro">
+          <input matInput placeholder="Nome do cliente" [(ngModel)]="filters.clienteFiltro" (ngModelChange)="handleClientFilterChange($event)" (keyup.enter)="applySearch()">
           <mat-icon matSuffix>person_search</mat-icon>
         </mat-form-field>
       </div>
 
-      <!-- Filtro por Status -->
+      <!-- Filtro por Data (Intervalo) -->
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Intervalo de Data</mat-label>
+          <mat-date-range-input [rangePicker]="rangePicker">
+            <input matStartDate [(ngModel)]="filters.dataInicio" placeholder="Início"
+                   (ngModelChange)="applyDateFilter()"/>
+            <input matEndDate [(ngModel)]="filters.dataFim" placeholder="Fim" (ngModelChange)="applyDateFilter()"/>
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+          <mat-date-range-picker #rangePicker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+
+      <!-- Filtro por Data (Tipo) -->
+      <div class="col-md-auto filter-date-type">
+        <mat-form-field appearance="outline">
+          <mat-label>Filtrar por data de</mat-label>
+          <mat-select [(ngModel)]="filters.filtrarDataCriacao">
+            <mat-option [value]="true">Abertura</mat-option>
+            <mat-option [value]="false">Fechamento</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Filtro por Status -->
+      <div class="col-md-auto filter-status-os">
+        <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
-          <mat-select [(ngModel)]="filters.statusFiltro">
+          <mat-select [(ngModel)]="filters.statusFiltro" (ngModelChange)="applyStatusFilter($event)">
             <mat-option value="">Todos</mat-option>
             <mat-option *ngFor="let option of statusOptions" [value]="option.value">
               {{ option.viewValue }}
             </mat-option>
           </mat-select>
-        </mat-form-field>
-      </div>
-
-      <!-- Filtro por Data (Range) -->
-      <div class="col-md-4">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Período de Criação</mat-label>
-          <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Início" [(ngModel)]="filters.dataInicio">
-            <input matEndDate placeholder="Fim" [(ngModel)]="filters.dataFim">
-          </mat-date-range-input>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-icon matSuffix>filter_alt</mat-icon>
         </mat-form-field>
       </div>
 
       <!-- Botões de Ação dos Filtros -->
-      <div class="col-md-2 d-flex justify-content-end gap-2">
-        <button mat-stroked-button color="warn" (click)="clearSearch()" matTooltip="Limpar Filtros">
+      <div class="col-md-auto d-flex align-items-end gap-2">
+        <button matButton="elevated" (click)="clearSearch()" matTooltip="Limpar Filtros">
           <mat-icon>filter_alt_off</mat-icon>
+          Limpar
         </button>
-        <button mat-raised-button color="primary" (click)="applySearch()" matTooltip="Filtrar">
+        <button matButton="elevated" (click)="applySearch()" matTooltip="Filtrar">
           <mat-icon>search</mat-icon>
+          Filtrar
         </button>
       </div>
     </div>
@@ -66,7 +81,7 @@
           <ng-container matColumnDef="clientName">
             <th mat-header-cell *matHeaderCellDef>Cliente</th>
             <td mat-cell *matCellDef="let order">
-              {{getClientName(order.cliente)}}
+              {{ getClientName(order.cliente) }}
             </td>
           </ng-container>
 
@@ -153,15 +168,14 @@
         <!-- Linha 1: UUID e Cliente -->
         <mat-card>
           <p>
-            UUID: <span>{{data?.uuid}}</span>
+            UUID: <span>{{ data?.uuid }}</span>
           </p>
         </mat-card>
 
-        <!-- NOVO CAMPO: Seletor de Cliente (Seleção Única) -->
+        <!-- Seletor de Cliente (Seleção Única) -->
         <div class="col-md-6">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Cliente</mat-label>
-            <!-- REMOVIDO: o atributo 'multiple' -->
             <mat-select formControlName="clienteUuid" required>
               <mat-option *ngFor="let client of availableClients" [value]="client.uuid">
                 {{ client.name }} ({{ client.email }})
@@ -186,7 +200,8 @@
           <div class="d-flex gap-2 align-items-center mb-2">
             <mat-form-field appearance="outline" class="flex-grow-1">
               <mat-label>Serviços</mat-label>
-              <mat-select [(ngModel)]="serviceToAddUuid" [ngModelOptions]="{standalone: true}" placeholder="Selecione um serviço">
+              <mat-select [(ngModel)]="serviceToAddUuid" [ngModelOptions]="{standalone: true}"
+                          placeholder="Selecione um serviço">
                 <mat-option *ngFor="let service of availableServices" [value]="service.uuid">
                   {{ service.service }} ({{ service.value | currency:'BRL' }})
                 </mat-option>
@@ -201,7 +216,8 @@
 
           <!-- Lista de serviços adicionados -->
           <div *ngIf="selectedServices.length > 0" class="mb-3">
-            <div *ngFor="let svc of selectedServices" class="d-flex justify-content-between align-items-center p-2 mb-1 service-item">
+            <div *ngFor="let svc of selectedServices"
+                 class="d-flex justify-content-between align-items-center p-2 mb-1 service-item">
               <div>
                 <strong>{{ svc.service }}</strong>
                 <div class="muted small">{{ svc.uuid }}</div>
@@ -215,7 +231,9 @@
             </div>
           </div>
 
-          <mat-hint *ngIf="selectedServices.length === 0">Selecione um serviço no dropdown e clique em Adicionar. Ao editar, os serviços da ordem serão carregados aqui.</mat-hint>
+          <mat-hint *ngIf="selectedServices.length === 0">Selecione um serviço no dropdown e clique em Adicionar. Ao
+            editar, os serviços da ordem serão carregados aqui.
+          </mat-hint>
           <mat-error *ngIf="orderForm.get('serviceUUIDs')?.hasError('required')">
             Obrigatório
           </mat-error>
@@ -257,7 +275,7 @@
 
         <mat-card>
           <p>
-            Total (R$): <span>{{calculatedTotal}}</span>
+            Total (R$): <span>{{ calculatedTotal }}</span>
           </p>
         </mat-card>
       </form>
