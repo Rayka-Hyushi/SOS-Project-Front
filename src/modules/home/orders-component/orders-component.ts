@@ -185,8 +185,18 @@ export class OrdersComponent implements OnInit, AfterViewInit {
 
   private loadOrders(): void {
     this.loading = true;
-    const dataInicioStr = this.filters.dataInicio ? this.filters.dataInicio.toISOString().split('T')[0] : undefined;
-    const dataFimStr = this.filters.dataFim ? this.filters.dataFim.toISOString().split('T')[0] : undefined;
+
+    const formatDate = (date: Date | null): string | undefined => {
+      if (!date) return undefined;
+      const year = date.getFullYear();
+      const month = ('0' + (date.getMonth() + 1)).slice(-2);
+      const day = ('0' + date.getDate()).slice(-2);
+      return `${year}-${month}-${day}`;
+    };
+
+    // Usamos a função auxiliar aqui
+    const dataInicioStr = formatDate(this.filters.dataInicio);
+    const dataFimStr = formatDate(this.filters.dataFim);
 
     this.orderService
       .getOrders(
