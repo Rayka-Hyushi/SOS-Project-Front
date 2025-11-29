@@ -115,6 +115,8 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   pageSize = 10;
   pageIndex = 0;
   loading = false;
+  isEditing: boolean = false;
+  currentOrderClient: Cliente | null = null;
 
   availableServices: Service[] = [];
   availableClients: Cliente[] = [];
@@ -300,8 +302,18 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.serviceToAddUuid = null;
     this.selectedServices = [];
 
+    this.isEditing = !!order;
+    this.currentOrderClient = null;
+
     if (order) {
-      console.log('openOrderDialog - received order:', order);
+      console.log('openOrderDialog - received order:', order.uuid);
+
+      const clienteUuid = (order as any).clientUUID;
+
+      const foundClient = this.availableClients.find(c => c.uuid === clienteUuid);
+      if (foundClient) {
+        this.currentOrderClient = foundClient;
+      }
 
       // se API fornece objetos em `servicos`, extrai os UUIDs; caso contrário usa serviceUUIDs
       const servicosArray = (order as any).servicos && Array.isArray((order as any).servicos)
@@ -339,14 +351,18 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       // atualiza o form com os uuids e demais campos
       this.orderForm.patchValue({
         ...order,
+        clienteUuid: clienteUuid,
         serviceUUIDs: serviceUUIDsFromOrder,
         extras: order.extras ?? 0,
         discount: order.discount ?? 0
       });
 
+      this.orderForm.get('clienteUuid')?.disable();
+
       this.calculateTotal(this.orderForm.value);
       this.cdr.detectChanges();
     } else {
+      this.orderForm.get('clienteUuid')?.enable();
       this.calculatedTotal = 0;
     }
 
@@ -356,7 +372,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.dialog.open(template, {
       width: '520px',
       data: dialogData,
-      autoFocus: false,
+      autoFocus: false
     });
 
     console.log('openOrderDialog - selectedServices after setup:', this.selectedServices);

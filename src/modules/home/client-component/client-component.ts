@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Cliente, ClienteRequestDTO} from '../../../core/models/cliente';
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 import {
@@ -24,40 +24,41 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
 @Component({
   selector: 'app-client-component',
   standalone: true,
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatIcon,
-        MatCard,
-        MatFormField,
-        MatCardHeader,
-        MatCardTitle,
-        MatCardContent,
-        MatCardActions,
-        MatPaginator,
-        MatDialogContent,
-        MatDialogActions,
-        MatTable,
-        FormsModule,
-        MatLabel,
-        MatButton,
-        MatInput,
-        MatIconButton,
-        MatSort,
-        MatColumnDef,
-        MatHeaderCell,
-        MatCell,
-        MatHeaderCellDef,
-        MatCellDef,
-        MatHeaderRow,
-        MatRow,
-        MatHeaderRowDef,
-        MatRowDef,
-        MatNoDataRow,
-        MatDialogTitle,
-        MatDialogClose,
-        MatProgressSpinner
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatIcon,
+    MatCard,
+    MatFormField,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatCardActions,
+    MatPaginator,
+    MatDialogContent,
+    MatDialogActions,
+    MatTable,
+    FormsModule,
+    MatLabel,
+    MatButton,
+    MatInput,
+    MatIconButton,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderRow,
+    MatRow,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatNoDataRow,
+    MatDialogTitle,
+    MatDialogClose,
+    MatProgressSpinner,
+    MatSuffix
+  ],
   templateUrl: './client-component.html',
   styleUrl: './client-component.css',
 })
@@ -90,7 +91,6 @@ export class ClientComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 

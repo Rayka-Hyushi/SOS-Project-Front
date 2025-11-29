@@ -9,3 +9,11 @@
   margin-top: 5px;
   border-radius: 10px;
 }
+
+.table-container-responsive {
+  overflow-x: auto;
+}
+
+.mat-table {
+  min-width: 900px;
+}

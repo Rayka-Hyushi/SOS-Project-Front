@@ -1,13 +1,28 @@
-/* orders-component.scss (ou styles.css) */
-
-/* Define a largura mínima para o Select de Status */
-.filter-status-os .mat-form-field {
-  min-width: 130px;
-  max-width: 150px;
+:host ::ng-deep .large-button {
+  min-height: 48px !important;
+  height: 48px !important;
+  padding: 0 20px !important;
+  margin-bottom: 20px;
 }
 
-/* Define a largura mínima para o Select de Tipo de Data */
-.filter-date-type .mat-form-field {
-  min-width: 100px;
-  max-width: 120px;
+:host ::ng-deep .large-button .mat-button-wrapper {
+  font-size: 16px !important;
+}
+
+:host ::ng-deep .large-button .mat-icon {
+  font-size: 26px !important;
+  width: 26px !important;
+  height: 26px !important;
+}
+
+:host ::ng-deep .large-button .mat-icon {
+  margin-right: 8px;
+}
+
+.table-container-responsive {
+  overflow-x: auto;
+}
+
+.mat-table {
+  min-width: 900px;
 }

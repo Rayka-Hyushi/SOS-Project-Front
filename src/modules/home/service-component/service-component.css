@@ -1,0 +1,7 @@
+.table-container-responsive {
+  overflow-x: auto;
+}
+
+.mat-table {
+  min-width: 900px;
+}
