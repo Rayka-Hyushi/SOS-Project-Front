@@ -34,10 +34,6 @@ export class OrderService {
     return this.httpClient.get<Page<Order>>(env.apiUrl + "/ordens", {params});
   }
 
-  getOneOrder(uuid: string): Observable<Order> {
-    return this.httpClient.get<Order>(env.apiUrl + "/ordens/" + uuid);
-  }
-
   updateOrder(uuid: string, order: Order): Observable<Order> {
     return this.httpClient.put<Order>(env.apiUrl + "/ordens/" + uuid, order);
   }
